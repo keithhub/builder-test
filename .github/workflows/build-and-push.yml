@@ -1,0 +1,28 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Podman
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install podman
+
+    - name: Login to gchr.io
+      run: |
+        sudo podman login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
+
+    - name: Build and Push Docker Image
+      run: |
+        sudo podman build -f Containerfile -t gchr.io/${{ github.actor }}/my-image:latest .
+        sudo podman push gchr.io/${{ github.actor }}/my-image:latest
