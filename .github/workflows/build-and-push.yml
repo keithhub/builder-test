@@ -20,11 +20,11 @@ jobs:
       run: |
         dnf install -y podman
 
-    - name: Login to gchr.io
+    - name: Login to GitHub Container Registry
       run: |
         podman login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
 
     - name: Build and Push Docker Image
       run: |
-        podman build -f Containerfile -t gchr.io/${{ github.actor }}/my-image:latest .
-        podman push gchr.io/${{ github.actor }}/my-image:latest
+        podman build -f Containerfile -t ghcr.io/${{ github.actor }}/my-image:latest .
+        podman push ghcr.io/${{ github.actor }}/my-image:latest
