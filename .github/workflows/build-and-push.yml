@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
+
+env:
+  TAG: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
 
 jobs:
   build-and-push:
@@ -28,5 +32,5 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        podman build -f Containerfile -t ghcr.io/${{ github.actor }}/my-image:latest .
-        podman push ghcr.io/${{ github.actor }}/my-image:latest
+        podman build -f Containerfile -t ${{ env.TAG }} .
+        podman push ${{ env.TAG }}
