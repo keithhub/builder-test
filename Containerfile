@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a heredoc for a sample script
-RUN tee /usr/local/bin/sample-script.sh << 'EOF'
+RUN tee /usr/local/bin/sample-script.sh <<'EOF'
 #!/bin/bash
 echo "This is a sample script using heredoc"
 EOF
