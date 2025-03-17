@@ -16,15 +16,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install Buildah
+    - name: Install Podman
       run: |
-        dnf install -y buildah
+        dnf install -y podman
 
     - name: Login to gchr.io
       run: |
-        buildah login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
+        podman login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
 
     - name: Build and Push Docker Image
       run: |
-        buildah build -f Containerfile -t gchr.io/${{ github.actor }}/my-image:latest .
-        buildah push gchr.io/${{ github.actor }}/my-image:latest
+        podman build -f Containerfile -t gchr.io/${{ github.actor }}/my-image:latest .
+        podman push gchr.io/${{ github.actor }}/my-image:latest
