@@ -8,6 +8,8 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    container:
+      image: registry.access.redhat.com/ubi9/ubi:latest
 
     steps:
     - name: Checkout code
@@ -15,8 +17,7 @@ jobs:
 
     - name: Install Podman
       run: |
-        sudo apt-get update
-        sudo apt-get -y install buildah
+        sudo dnf install -y buildah
 
     - name: Login to gchr.io
       run: |
