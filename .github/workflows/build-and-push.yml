@@ -8,22 +8,25 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    container:
-      image: registry.access.redhat.com/ubi9/ubi:latest
 
     steps:
+    - name: Update Ubuntu
+      run: |
+        sudo apt-get update -y
+        sudo apt-get upgrade -y
+
     - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Install Podman
       run: |
-        dnf install -y podman
+        sudo apt-get install -y podman
 
     - name: Login to gchr.io
       run: |
-        podman login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
+        sudo podman login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
 
     - name: Build and Push Docker Image
       run: |
-        podman build -f Containerfile -t gchr.io/${{ github.actor }}/my-image:latest .
-        podman push gchr.io/${{ github.actor }}/my-image:latest
+        sudo podman build -f Containerfile -t gchr.io/${{ github.actor }}/my-image:latest .
+        sudo podman push gchr.io/${{ github.actor }}/my-image:latest
