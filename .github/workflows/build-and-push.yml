@@ -11,6 +11,8 @@ jobs:
     container:
       image: registry.access.redhat.com/ubi9/ubi:latest
       options: --privileged
+    permissions:
+      packages: write
 
     steps:
     - name: Checkout code
