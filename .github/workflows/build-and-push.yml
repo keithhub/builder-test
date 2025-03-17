@@ -16,13 +16,13 @@ jobs:
     - name: Install Podman
       run: |
         sudo apt-get update
-        sudo apt-get -y install podman
+        sudo apt-get -y install buildah
 
     - name: Login to gchr.io
       run: |
-        sudo podman login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
+        sudo buildah login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
 
     - name: Build and Push Docker Image
       run: |
-        sudo podman build -f Containerfile -t gchr.io/${{ github.actor }}/my-image:latest .
-        sudo podman push gchr.io/${{ github.actor }}/my-image:latest
+        sudo buildah build -f Containerfile -t gchr.io/${{ github.actor }}/my-image:latest .
+        sudo buildah push gchr.io/${{ github.actor }}/my-image:latest
